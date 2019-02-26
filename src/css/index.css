@@ -7,10 +7,186 @@
 
 body {
   font-family: 'PT Sans Narrow', sans-serif;
+  position:relative;
 }
 
 header {
   position:fixed;
   width: 100%;
+  box-sizing: border-box;
+  background-color: #555555;
+  display:block;
+  flex-wrap: nowrap;
+  padding: 10px;
+  z-index:3;
+}
+
+#menu{
+  position:relative;
+  display:flex;
+}
+
+#search {
+  position:relative;
+  width: 300px;
+  margin-right: 10px;
+  border: solid 1px;
+  border-radius: 15px;
+  background-color: #e1e1e1;
+  box-sizing: border-box;
+  margin:0 10px;
+}
+  #search input {
+      float:left;
+      width: 240px;
+      height: 32px;
+      padding-left: 10px;
+      color: #000;
+      font-size: 12pt;
+      border: none;
+      background-color: transparent;
+      margin:3px;
+  }
+
+  #search img {
+    padding: 5px;
+  }
+
+#menuButtons {
+  position:relative;
+  display:block;
+}
+  #menuButtons a {
+    display:inline-block;
+    font-size: 17pt;
+    font-weight: 900;
+    color:#e1e1e1;
+    box-sizing: border-box;
+    margin: 5px 10px;
+  }
+
+  #container {
+    padding-top: 60px;
+  }
+
+#contactList {
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+}
+  #contacList div {
+    display:block;
+    margin: 20px auto;
+    box-sizing: border-box;
+  }
+
+/*CONTACT CARD*/
+.contact-card {
+    display:block;
+    position: relative;
+    margin: 20px auto;
+    box-sizing: border-box;
+    width: 380px;
+    min-width: 320px;
+    height: 150px;
+    background-color: #fff;
+    border: 1px solid #c0c0c0;
+    border-left: 10px solid #400080;
+    padding: 0;
+    box-shadow: 3px 3px 3px rgba(5,5,5,.1);
+}
+
+.card-header{
+    background:transparent;
+    box-sizing: border-box;
+    border: none;
+    width: 100%;
+    height: 100%;
+    position:relative;
+    flex-wrap: nowrap;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.contact-card .avatar {
+  position: relative;
+  display:block;
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 15px 0;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.contact-card .icon-card{
+  float: left;
+}
+
+
+.main-info {
+  text-align: center;
+  position: relative;
+  display:block;
+  margin: 20px auto;
+  line-height: 2.1em;
   
 }
+
+  .main-info h3{
+      font-size: 15pt;
+      color:#5e5e5b;
+      font-weight: bold;
+      text-decoration: underline;
+  }
+
+  .main-info h4 {
+      font-size: 10pt;
+  }
+
+
+/*MODAL*/
+#modal {
+  display:none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0,.5);
+  overflow-y:auto;
+  z-index: 4;
+}
+  .modal-content {
+    display:block;
+    background-color: #fff;
+    margin:80px auto;
+    padding:0;
+    width: 70%;
+    animation-name: modalopen;
+    animation-duration: 0.7s;
+  }
+
+  .modal-header{
+    background-color: #400080;
+    font-size: 18pt;
+    color:#fff;
+    font-weight: 600;
+    padding: 10px;
+    text-align:center;
+}
+
+@keyframes modalopen {
+  from{opacity: 0}
+  to{opacity: 1}
+}
+
+
+
+/*FORMULÁRIO*/
