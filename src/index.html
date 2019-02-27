@@ -11,6 +11,7 @@
   <header id="header">
       <nav id="menu">
         <div id="menuButtons">
+          <a id='aHome'><span></span>Home</a>
           <a id="aFavorites"><span>&#9733;</span>Favoritos</a>
           <a id="aNewContact"><span>&#43;</span>Novo contato</a>
         </div>
@@ -32,8 +33,12 @@
       <div id="modal" class="modal">
        
 <!--MODAL COM O FORMULÁRIO PARA EDITAR/ADICIONAR--> 
-        <div class="modal-content">
-          <form id ="contact-form" class="contact-form">
+        <div id='modal-form' class="modal-content">
+            <section id="modal-header" class="modal-header">
+                <h3 id="title-form" class='title'></h3>
+            </section>  
+
+          <form id ="contact-form" class="contact-form" method="POST">
             <fieldset>
               <legend class='form-legend'></legend>
                   <div class="form-group">    
@@ -48,8 +53,13 @@
       
                       <label for="fGender">Sexo</label>
                           <select name="fGender" id="fGender">
-      
+                              <option value='f'>Feminino</option>
+                              <option value='m'>Masculino</option>
                           </select> <br/> 
+
+                      <label for ='fFavorite' >Favoritar</label>
+                      <input type='checkbox' id='fFavorite' name='fFavorite'/><br/>
+
                       <label for="fCompany">Empresa</label>
                       <input type="text" id="fCompany" class="input-form" name="fCompany"/><br/>
       
@@ -62,36 +72,38 @@
                       <label for="fAvatar">Avatar</label>
                       <input type="file" id="fAvatar" class="input-form" name="fAvatar" src=""/><br/>  
       
-                      <label for="fComment">Comentários</label>
-                      <textarea id="fComment" class="textarea-form" name="fComment"></textarea>
+                      <label for="fComments">Comentários</label>
+                      <textarea id="fComments" class="textarea-form" name="fComments"></textarea>
                   </div>
-                  <input type="submit" class="btConfirm" value="Confirmar"/>      
+                  <input type="submit" id="btConfirm" class="btConfirm" value="Confirmar"/>      
               </fieldset> 
           </form>
+
         </div>
        
-    <div class="modal-content">
+    <div id="modal-contact" class="modal-content">
       <section id="modal-header" class="modal-header">
-        <h3 class='title'></h3>
-      </section>
+          <h3 id="title-modal" class='title'></h3>
+        </section> 
       <div class="mIcons">   
           <button class="garbage"><img src="img/icon-garbage.png" class="icon"/></button>
           <button class="fav"><img src="" class="icon"/></button>
           <button class="edit"><img src="img/icon-edit.png" class="icon"/></button>
       </div>
-          <img src="" id="mAvatar" class="avatar"/>
-          
+        <img src="" id="mAvatar" class="avatar"/>
+        
       <section class='modal-short-info'>    
-          <span>E-mail: <p class="mEmail"></p></span>
-          <span>Telefone: <p class="mPhone"></p></span>
-          <span>Sexo: <p class="mGender"></p></span>
-          <span>Empresa: <p class="mCompany"></p></span>
-          <span>Endereço: <p class="mAddress"></p></span>
+        <span>E-mail: <p class="mEmail"></p></span>
+        <span>Telefone: <p class="mPhone"></p></span>
+        <span>Sexo: <p class="mGender"></p></span>
+        <span>Empresa: <p class="mCompany"></p></span>
+        <span>Endereço: <p class="mAddress"></p></span>
       </section>        
-          <div class="modal-contact-info">
-            <span>Comentarios:</span><p class="mComments"></p><br/>  
-          </div>
+      <div class="modal-contact-info">
+        <span>Comentarios:</span><p class="mComments"></p><br/>  
+      </div>
     </div>
+      
 </div>
     
     </div>

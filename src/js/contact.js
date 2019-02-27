@@ -1,12 +1,46 @@
 import fav from '../img/icon-fav-full.png';
 import nfav from '../img/icon-fav.png';
 
-/*FUNÇÃO PARA ATRIBUIR ICONE DE FAVORITO NO CARD*/
-export const isFavorite = function(contact)  {
-    if (contact.isFavorite) {
-        //myFavs.setItem(contact.id, true);
-        return fav;
-    } else {
-        return nfav;
+export const myFavs = window.localStorage;
+
+let favorites={};
+let contacts = [];
+
+export const getAllFavorites = function (contacts){ //não está retornando o array de favoritos 
+    for(let i = 0; i < contacts.length ; i++){
+        if(myFavs.getItem(contacts.id) != null){
+            favorites+=contacts;
+        }   
+    }
+    console.log("favoritos"+favorites);
+    return favorites;
+}
+
+export const removeFavorite = function (contact) {
+    for(let i = 0; i < favorites.length; i++){
+        if(myFavs.getItem(contact.id)){
+            favorites.splice(i,1);
+            break;
+        }
     }
 }
+
+/*ATRIBUI ICONE DE FAVORITO E SETA OS CONTATOS FAVORITOS*/
+export const isFavorite = function(contact)  {
+    if (contact.isFavorite) {  //se ele for favorito    
+        if(myFavs.getItem(contact.id) != null){ //se estiver no LS
+            return fav; 
+        }else{
+            myFavs.setItem(contact.id,true); //add no LS //add no array
+            return fav;
+        }
+    } else {
+        if(myFavs.getItem(contact.id) != null){//se for falso, mas estiver como favorito no LS
+            contact.isFavorite = true;
+            return fav;   
+        }else{
+            return nfav;
+        }   
+    }
+}
+

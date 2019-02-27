@@ -4,9 +4,12 @@ import './js/modal'
 
 import {isFavorite} from  './js/contact';
 import {openModal} from './js/modal';
+import {getAllFavorites} from './js/contact';
 
+let favAux;
+let contactsAux = [];
 let contacts = [];
-const favorites =[];
+let allContacts =[];
 
 const getAll = async () => {
     const res = await fetch('http://contacts-api.azurewebsites.net/api/contacts/')
@@ -17,8 +20,7 @@ const getAll = async () => {
         allContacts: data,
         loading: false
     }
-
-    contacts = data;
+    allContacts = data;
 }
 
 /*INFINITE SCROLL*/
@@ -28,14 +30,22 @@ window.addEventListener('scroll',() =>{
 
     if (index < contacts.length) {
         if(Math.ceil(scrolled) >= scrollable){
-            loadMore();
+            if(favAux){ //ele existe
+                console.log('favoritando');
+                loadMore();
+            }else{
+                console.log('todos os contatos');
+                loadMore();
+            } 
         }
     }
 })
 
 getAll().then(() => {
+    contacts = allContacts;
     loadMore();
 });
+
 
 const contactsDiv = document.getElementById('contactList');
 let index = 0;
@@ -44,7 +54,7 @@ export const loadMore = function (reset) {
     if(reset == 1){
         index = 0;
         contactsDiv.innerHTML = "";
-    }else{    
+    }else{
         const aux = index + 10;
         if (index == contacts.length - 1) {
             contactsDiv.innerHTML = "";
@@ -71,9 +81,28 @@ export const loadMore = function (reset) {
                     contactsDiv.appendChild(b);
                 }else{
                     const b = document.createElement("div");
-                  b.innerHTML = `<h1>CARREGANDO...</h1>`  
+                  b.innerHTML = `<h1>CARREGANDO...</h1>`
+                  const body = document.getElementById('container');
+                  body.innerHTML = b;  
                 }
             }
-        }
+        }   
     }
 }
+
+const btFavContacts = document.getElementById('aFavorites');
+btFavContacts.addEventListener('click', function(){
+    favAux = true;
+    console.log(contacts);
+    contactsAux = getAllFavorites(contacts);
+    contacts = contactsAux;
+    console.log(contactsAux);
+    loadMore(1);
+});
+
+const btHome = document.getElementById('aHome');
+btHome.addEventListener('click', function(){
+    favAux = false;
+    contacts = allContacts;
+    loadMore(1)
+})
