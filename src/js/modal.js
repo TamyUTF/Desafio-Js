@@ -126,7 +126,10 @@ export const openForm = (contact) => {
     }
  
     btConfirm.onclick = () =>{
-        editContact(elementsFormDOM, contact);
+        if(checkForm(contactForm)){
+            editContact(elementsFormDOM, contact);   
+        }
+        
         /*
         if(checkForm(contactForm)){
             if(contact!= null){
@@ -161,14 +164,41 @@ export const checkForm = (form) =>{
         form.fFirstName.focus();
         return false;
     }
+    console.log(form.fFirstName.value.lenght);
+    if(form.fFirstName.value.lenght > 0 && form.firstName.value.lenght < 3){
+        alert("Preencha o nome (mín. 3 caracteres)");
+        form.fFirstName.focus();
+        return false;
+    }
     if(form.fLastName.value == ""){
         alert("Informe o sobrenome do contato.");
         form.fLastName.focus();
         return false;
     }
+    if(form.fLastName.value.lenght > 0 && form.fLastName.value.lenght < 3){
+        alert("Preencha o sobrenome (mín. 3 caracteres)");
+        form.fLastName.focus();
+        return false;
+    }
     if(form.fCompany.value == ""){
         alert("Informe a empresa do contato.");
+        form.fCompany.focus();
         return false
+    }
+    if(form.fCompany.value.lenght > 0 && form.fCompany.value.lenght < 3){
+        alert("Nome da empresa (mín. 3 caracteres)");
+        form.fCompany.focus();
+        return false;
+    }
+    if(form.fAddress.value.lenght > 0 && form.fAddress.value.lenght < 3){
+        alert("Preencha o endereço (mín. 3 caracteres)");
+        form.fAddress.focus();
+        return false;
+    }
+    if(form.fPhone.value.lenght > 0 && form.fPhone.value.lenght < 3){
+        alert("Preencha o telefone (mín. 3 caracteres)");
+        form.fPhone.focus();
+        return false;
     }
 return true; 
 }
