@@ -3,16 +3,15 @@ import nfav from '../img/icon-fav.png';
 
 export const myFavs = window.localStorage;
 
-let favorites={};
-let contacts = [];
+let favorites=[];
 
-export const getAllFavorites = function (contacts){ //não está retornando o array de favoritos 
+export const getAllFavorites = function (contacts){
+    favorites = [];
     for(let i = 0; i < contacts.length ; i++){
-        if(myFavs.getItem(contacts.id) != null){
-            favorites+=contacts;
-        }   
+        if(myFavs.getItem(contacts[i].id) != null){
+            favorites.push(contacts[i]);
+        }
     }
-    console.log("favoritos"+favorites);
     return favorites;
 }
 

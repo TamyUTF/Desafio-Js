@@ -6,8 +6,8 @@ import {isFavorite} from  './js/contact';
 import {openModal} from './js/modal';
 import {getAllFavorites} from './js/contact';
 
+let contactsAux=[];
 let favAux;
-let contactsAux = [];
 let contacts = [];
 let allContacts =[];
 
@@ -81,9 +81,9 @@ export const loadMore = function (reset) {
                     contactsDiv.appendChild(b);
                 }else{
                     const b = document.createElement("div");
-                  b.innerHTML = `<h1>CARREGANDO...</h1>`
-                  const body = document.getElementById('container');
-                  body.innerHTML = b;  
+                    b.innerHTML = `<h1>CARREGANDO...</h1>`
+                    const body = document.getElementById('container');
+                    body.innerHTML = b;  
                 }
             }
         }   
@@ -93,10 +93,9 @@ export const loadMore = function (reset) {
 const btFavContacts = document.getElementById('aFavorites');
 btFavContacts.addEventListener('click', function(){
     favAux = true;
-    console.log(contacts);
     contactsAux = getAllFavorites(contacts);
     contacts = contactsAux;
-    console.log(contactsAux);
+    console.log(contacts[1].firstName);
     loadMore(1);
 });
 
