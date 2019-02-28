@@ -5,6 +5,7 @@ import './js/modal'
 import {isFavorite} from  './js/contact';
 import {openModal} from './js/modal';
 import {getAllFavorites} from './js/contact';
+import {openForm} from './js/modal';
 
 let contactsAux=[];
 let favAux;
@@ -105,3 +106,8 @@ btHome.addEventListener('click', function(){
     contacts = allContacts;
     loadMore(1)
 })
+
+const btNewContact = document.getElementById('aNewContact');
+btNewContact.onclick=()=>{
+    openForm(null);
+}

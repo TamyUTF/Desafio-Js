@@ -301,9 +301,12 @@ header {
   border: 1px solid #c0c0c0;
 }
 
-.contact-form #btConfirm {
+ #btConfirm {
   position: relative;
+  width: 70%;
+  border-radius: 20px;
   margin: 10px 15%;
+  cursor:pointer;
 }
 
 .contact-form select {

@@ -6,12 +6,14 @@ import {loadMore} from "./../index";
 import {myFavs} from './contact';
 import {setFavorite} from './contact';
 import {removeFavorite} from './contact';
+import {updateContact} from './api';
 
 
 
 const modalDiv = document.getElementById('modal');
 const modalContact = document.getElementById('modal-contact');
 const modalForm = document.getElementById('modal-form');
+const contactForm = document.getElementById('contact-form');
 
 const btEdit = document.getElementsByClassName('edit')[0];
 const btConfirm = document.getElementById('btConfirm');
@@ -56,7 +58,6 @@ const closeModal = function (e) {
 
 window.addEventListener('click', closeModal);
 
-
 export const openModal = (contact)=>{
     modalDiv.style.display = 'block';
     modalContact.style.display = 'block';
@@ -68,8 +69,9 @@ export const openModal = (contact)=>{
     elementsModalDOM.company.innerHTML = contact.info.company;
     elementsModalDOM.address.innerHTML = contact.info.address;
     elementsModalDOM.comments.innerHTML = contact.info.comments;
-    elementsModalDOM.avatar.setAttribute('src',contact.info.avatar);
-    elementsModalDOM.favorite.setAttribute('src',isFavorite(contact));
+    elementsModalDOM.avatar.setAttribute('src', contact.info.avatar);
+    elementsModalDOM.favorite.setAttribute('src', isFavorite(contact));
+    console.log('blabla',contact.info.avatar);
 
     btEdit.onclick = () => {
         openForm(contact);
@@ -81,25 +83,59 @@ export const openModal = (contact)=>{
 }
 
 
-const openForm = (contact) => {
-    modalContact.style.display = "none";
+export const openForm = (contact) => {
+    modalDiv.style.display = 'block';
     modalForm.style.display = "block";
-
-    if(contact!=null){ //é para editar
+    modalContact.style.display = "none";
+    
+    if(contact != null){ //é para editar
         elementsFormDOM.header.innerHTML = "Editar Contato";
         elementsFormDOM.firstName.value = contact.firstName;
         elementsFormDOM.lastName.value = contact.lastName;
         elementsFormDOM.email.value = contact.email;
         elementsFormDOM.phone.value = contact.info.phone;
-        elementsFormDOM.gender.value =  contact.gender;//arrumar
+        if(contact.info.gender == 'f'){
+            elementsFormDOM.gender.innerHTML=
+            `<option value='f' selected >Feminino</option>
+            <option value='m'>Masculino</option>`
+        }else if(contact.info.gender == 'm'){
+            `<option value='f'>Feminino</option>
+            <option value='m' selected >Masculino</option>`
+        }
         elementsFormDOM.company.value = contact.info.company;
         elementsFormDOM.address.value = contact.info.address;
         elementsFormDOM.comments.value = contact.info.comments;
-        elementsFormDOM.avatar.setAttribute('src', contact.info.avatar);
-        elementsFormDOM.favorite.checked = contact.favorite;
+        elementsFormDOM.avatar.setAttribute = ('src', contact.info.avatar);
+        if(contact.isFavorite == true){
+            elementsFormDOM.favorite.checked = true;
+        }else{
+            elementsFormDOM.favorite.checked = false;
+        }
+    }else{ //adicionar um novo contato
+        elementsFormDOM.header.innerHTML = "Novo Contato";
+        elementsFormDOM.firstName.value = "";
+        elementsFormDOM.lastName.value = "";
+        elementsFormDOM.email.value = "";
+        elementsFormDOM.phone.value = "";
+        elementsFormDOM.gender.value = "f";
+        elementsFormDOM.company.value = "";
+        elementsFormDOM.address.value = "";
+        elementsFormDOM.comments.value = "";
+        elementsFormDOM.avatar.value = "";
+        elementsFormDOM.favorite.checked = false;
     }
+ 
     btConfirm.onclick = () =>{
-        console.log(elementsFormDOM);
+        editContact(elementsFormDOM, contact);
+        /*
+        if(checkForm(contactForm)){
+            if(contact!= null){
+                console.log('clicado2');
+                editContact(elementsFormDOM,contact.id);  
+            }else{
+                newContact(elementsFormDOM);
+            }
+        }*/
     }
 }
 
@@ -117,4 +153,63 @@ const favoriteContact = (contact) => {
         imgFav.setAttribute('src', fav);
     }
     loadMore(1);    
+}
+
+export const checkForm = (form) =>{
+    if(form.fFirstName.value == ""){
+        alert("Informe o nome do contato.");
+        form.fFirstName.focus();
+        return false;
+    }
+    if(form.fLastName.value == ""){
+        alert("Informe o sobrenome do contato.");
+        form.fLastName.focus();
+        return false;
+    }
+    if(form.fCompany.value == ""){
+        alert("Informe a empresa do contato.");
+        return false
+    }
+return true; 
+}
+
+const editContact = (dataForm, contact) => {
+    let email = dataForm.email.value;
+    let phone = dataForm.phone.value;
+    let address = dataForm.address.value;
+    let comments = dataForm.comments.value;
+    let favorite = dataForm.favorite.checked;
+    let avatar = dataForm.avatar.value;
+
+    if(email.lenght == 0){
+        email = "null";
+    }else if(phone.lenght == 0 ){
+        phone = "null"
+    }else if(address.lenght == 0){
+        address = "null";
+    }else if(comments.lenght == 0){
+        comments = "null";
+    }else if(avatar.lenght == 0){
+        avatar = contact.info.avatar;
+    }
+
+    const contactJSON = JSON.stringify({
+        firstName: dataForm.firstName.value,
+        lastName: dataForm.lastName.value,
+        email: email,
+        gender: dataForm.gender.value,
+        isFavorite: favorite,
+        company: dataForm.company.value,
+        avatar: avatar,
+        address: address,
+        phone: phone,
+        comments: comments,   
+    });
+    console.log(contactJSON);
+
+    updateContact(contactJSON, contact);
+}
+
+const newContact = (contactData) => {
+
 }
