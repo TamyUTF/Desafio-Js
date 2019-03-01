@@ -4,21 +4,20 @@ import nfav from '../img/icon-fav.png';
 import { isFavorite } from "./contact";
 import {loadMore} from "./../index";
 import {myFavs} from './contact';
-import {setFavorite} from './contact';
-import {removeFavorite} from './contact';
 import {updateContact} from './api';
-
-
+import {createContact} from './api';
+import {deleteContact} from './api';
 
 const modalDiv = document.getElementById('modal');
 const modalContact = document.getElementById('modal-contact');
-const modalForm = document.getElementById('modal-form');
-const contactForm = document.getElementById('contact-form');
+export const modalForm = document.getElementById('modal-form');
+export const contactForm = document.getElementById('contact-form');
 
 const btEdit = document.getElementsByClassName('edit')[0];
 const btConfirm = document.getElementById('btConfirm');
 const btFav = document.getElementsByClassName('fav')[0];
 const imgFav = document.getElementsByClassName('icon')[1];
+const btDel = document.getElementsByClassName('garbage')[0];
 
 const elementsModalDOM = {
     header: document.getElementById('title-modal'),
@@ -61,6 +60,7 @@ window.addEventListener('click', closeModal);
 export const openModal = (contact)=>{
     modalDiv.style.display = 'block';
     modalContact.style.display = 'block';
+    modalForm.style.display = "none";
 
     elementsModalDOM.header.innerHTML = `${contact.firstName} ${contact.lastName}`;
     elementsModalDOM.email.innerHTML = contact.email;
@@ -71,7 +71,8 @@ export const openModal = (contact)=>{
     elementsModalDOM.comments.innerHTML = contact.info.comments;
     elementsModalDOM.avatar.setAttribute('src', contact.info.avatar);
     elementsModalDOM.favorite.setAttribute('src', isFavorite(contact));
-    console.log('blabla',contact.info.avatar);
+    console.log();
+    console.log(elementsModalDOM.avatar.value);
 
     btEdit.onclick = () => {
         openForm(contact);
@@ -80,15 +81,21 @@ export const openModal = (contact)=>{
     btFav.onclick = () => {
         favoriteContact(contact);
     }
-}
 
+    btDel.onclick = () => {
+        const res = confirm("Deseja realmente excluir?");
+        if(res == true){
+            deleteContact(contact);
+        }
+    }
+}
 
 export const openForm = (contact) => {
     modalDiv.style.display = 'block';
     modalForm.style.display = "block";
     modalContact.style.display = "none";
     
-    if(contact != null){ //é para editar
+    if(contact != null){ //edita contato
         elementsFormDOM.header.innerHTML = "Editar Contato";
         elementsFormDOM.firstName.value = contact.firstName;
         elementsFormDOM.lastName.value = contact.lastName;
@@ -105,14 +112,14 @@ export const openForm = (contact) => {
         elementsFormDOM.company.value = contact.info.company;
         elementsFormDOM.address.value = contact.info.address;
         elementsFormDOM.comments.value = contact.info.comments;
-        elementsFormDOM.avatar.setAttribute = ('src', contact.info.avatar);
+        elementsFormDOM.avatar.value = contact.info.avatar;
         if(contact.isFavorite == true){
             elementsFormDOM.favorite.checked = true;
         }else{
             elementsFormDOM.favorite.checked = false;
         }
-    }else{ //adicionar um novo contato
-        elementsFormDOM.header.innerHTML = "Novo Contato";
+    }else{ //adiciona um novo contato
+        elementsFormDOM.header.innerHTML = "Novo Contato"; 
         elementsFormDOM.firstName.value = "";
         elementsFormDOM.lastName.value = "";
         elementsFormDOM.email.value = "";
@@ -127,32 +134,27 @@ export const openForm = (contact) => {
  
     btConfirm.onclick = () =>{
         if(checkForm(contactForm)){
-            editContact(elementsFormDOM, contact);   
-        }
-        
-        /*
-        if(checkForm(contactForm)){
-            if(contact!= null){
-                console.log('clicado2');
-                editContact(elementsFormDOM,contact.id);  
+            if(contact != null){
+                editContact(elementsFormDOM, contact); 
             }else{
                 newContact(elementsFormDOM);
-            }
-        }*/
+            }        
+        }
     }
 }
 
 const favoriteContact = (contact) => {
     if(contact.isFavorite == true){
-        if(myFavs.getItem(contact.id)!= null){ //se ele estiver no local Storage
+        if(myFavs.getItem(contact.id) != null){
             myFavs.removeItem(contact.id);
-            removeFavorite(contact);
         }
         contact.isFavorite = false;
+        updateFavorite(contact);
         imgFav.setAttribute('src', nfav);
     }else{
         myFavs.setItem(contact.id, true);
         contact.isFavorite = true;
+        updateFavorite(contact);
         imgFav.setAttribute('src', fav);
     }
     loadMore(1);    
@@ -164,8 +166,8 @@ export const checkForm = (form) =>{
         form.fFirstName.focus();
         return false;
     }
-    console.log(form.fFirstName.value.lenght);
-    if(form.fFirstName.value.lenght > 0 && form.firstName.value.lenght < 3){
+    console.log(form.fFirstName.value.length);
+    if(form.fFirstName.value.length > 0 && form.fFirstName.value.length < 3){
         alert("Preencha o nome (mín. 3 caracteres)");
         form.fFirstName.focus();
         return false;
@@ -175,7 +177,7 @@ export const checkForm = (form) =>{
         form.fLastName.focus();
         return false;
     }
-    if(form.fLastName.value.lenght > 0 && form.fLastName.value.lenght < 3){
+    if(form.fLastName.value.length > 0 && form.fLastName.value.length < 3){
         alert("Preencha o sobrenome (mín. 3 caracteres)");
         form.fLastName.focus();
         return false;
@@ -185,17 +187,17 @@ export const checkForm = (form) =>{
         form.fCompany.focus();
         return false
     }
-    if(form.fCompany.value.lenght > 0 && form.fCompany.value.lenght < 3){
+    if(form.fCompany.value.length > 0 && form.fCompany.value.length < 3){
         alert("Nome da empresa (mín. 3 caracteres)");
         form.fCompany.focus();
         return false;
     }
-    if(form.fAddress.value.lenght > 0 && form.fAddress.value.lenght < 3){
+    if(form.fAddress.value.length > 0 && form.fAddress.value.length < 3){
         alert("Preencha o endereço (mín. 3 caracteres)");
         form.fAddress.focus();
         return false;
     }
-    if(form.fPhone.value.lenght > 0 && form.fPhone.value.lenght < 3){
+    if(form.fPhone.value.length > 0 && form.fPhone.value.length < 3){
         alert("Preencha o telefone (mín. 3 caracteres)");
         form.fPhone.focus();
         return false;
@@ -203,6 +205,21 @@ export const checkForm = (form) =>{
 return true; 
 }
 
+const updateFavorite = (contact) => {
+    const contactJSON = JSON.stringify({
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        email: contact.email,
+        gender: contact.gender,
+        isFavorite: contact.isFavorite,
+        company: contact.info.company,
+        avatar: contact.info.avatar,
+        address: contact.info.address,
+        phone: contact.info.phone,
+        comments: contact.info.comments,   
+    });
+    updateContact(contactJSON, contact);
+}
 const editContact = (dataForm, contact) => {
     let email = dataForm.email.value;
     let phone = dataForm.phone.value;
@@ -211,15 +228,15 @@ const editContact = (dataForm, contact) => {
     let favorite = dataForm.favorite.checked;
     let avatar = dataForm.avatar.value;
 
-    if(email.lenght == 0){
+    if(email.length == 0){
         email = "null";
-    }else if(phone.lenght == 0 ){
+    }else if(phone.length == 0 ){
         phone = "null"
-    }else if(address.lenght == 0){
+    }else if(address.length == 0){
         address = "null";
-    }else if(comments.lenght == 0){
+    }else if(comments.length == 0){
         comments = "null";
-    }else if(avatar.lenght == 0){
+    }else if(avatar.length == 0){
         avatar = contact.info.avatar;
     }
 
@@ -240,6 +257,38 @@ const editContact = (dataForm, contact) => {
     updateContact(contactJSON, contact);
 }
 
-const newContact = (contactData) => {
+const newContact = (dataForm) => {
+    let email = dataForm.email.value;
+    let phone = dataForm.phone.value;
+    let address = dataForm.address.value;
+    let comments = dataForm.comments.value;
+    let favorite = dataForm.favorite.checked;
+    let avatar = dataForm.avatar.value;
 
+    if(email.length == 0){
+        email = "null";
+    }else if(phone.length == 0 ){
+        phone = "null"
+    }else if(address.length == 0){
+        address = "null";
+    }else if(comments.length == 0){
+        comments = "null";
+    }else if(avatar.length == 0){
+        avatar = "";
+    }
+
+    const contactJSON = JSON.stringify({
+        firstName: dataForm.firstName.value,
+        lastName: dataForm.lastName.value,
+        email: email,
+        gender: dataForm.gender.value,
+        isFavorite: favorite,
+        company: dataForm.company.value,
+        avatar: avatar,
+        address: address,
+        phone: phone,
+        comments: comments,   
+    });
+
+    createContact(contactJSON);
 }

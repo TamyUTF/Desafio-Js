@@ -17,14 +17,12 @@
         </div>
         <div id="search">
             <input type="text" id="iSearch" placeholder="Pesquisar contato"/>
-            <img src="img/icon-search.png" />
+            <button id='btSearch'><img src="img/icon-search.png" /></button>
           </div>
       </nav>
   </header>
 
   <div id="container">
-
-  
 
       <div id="contactList">
         <!--contatos adicionados dinamicamente-->
@@ -33,78 +31,61 @@
       <div id="modal" class="modal">
        
 <!--MODAL COM O FORMULÁRIO PARA EDITAR/ADICIONAR--> 
-        <div id='modal-form' class="modal-content">
-            <section id="modal-header" class="modal-header">
-                <h3 id="title-form" class='title'></h3>
-            </section>  
+      <div id='modal-form' class="modal-content">
+          <section id="modal-header" class="modal-header">
+              <h3 id="title-form" class='title'></h3>
+          </section>  
 
-          <form id ="contact-form" class="contact-form">
-            <fieldset>
-              <legend class='form-legend'></legend>
-                  <div class="form-group">    
-                      <label for="fFirstName">Nome</label>
-                      <input type="text" id="fFirstName" class="input-form" name="fFirstName" placeholder="Digite seu primeiro nome" /><br/> 
-      
-                      <label for="fLastName">Sobrenome</label>
-                      <input type="text" id="fLastName" class="input-form" name="fLastName" placeholder="Digite seu sobrenome" /><br/> 
-      
-                      <label for="fEmail">E-mail</label>
-                      <input type="email" id="fEmail" class="input-form" name="fEmail" placeholder="Digite um e-mail válido"/><br/>
-      
-                      <label for="fGender">Sexo</label>
-                          <select name="fGender" id="fGender" >
-                              <option value='f'>Feminino</option>
-                              <option value='m'>Masculino</option>
-                          </select> <br/> 
-
-                      <label for ='fFavorite' >Favoritar</label>
-                      <input type='checkbox' id='fFavorite' name='fFavorite'/><br/>
-
-                      <label for="fCompany">Empresa</label>
-                      <input type="text" id="fCompany" class="input-form" name="fCompany" placeholder="Digite a empresa" /><br/>
-      
-                      <label for="fAddress">Endereço</label>
-                      <input type="text" id="fAddress" class="input-form" name="fAddress" placeholder="Digite o endereço, Rua, bairro, etc..."/><br/>
-      
-                      <label for="fPhone">Telefone</label>
-                      <input type="tel" id="fPhone" class="input-form" name="fPhone"  placeholder="Digite um número de telefone válido"/><br/>
-      
-                      <label for="fAvatar">Avatar</label>
-                      <input type="file" id="fAvatar" class="input-form" name="fAvatar" src=""/><br/>  
-      
-                      <label for="fComments">Comentários</label>
-                      <textarea id="fComments" class="textarea-form" name="fComments"  placeholder="Insira um comentário"></textarea>
-                  </div> 
-                  <input type="button" id="btConfirm" class="btConfirm" value='Enviar'>
-              </fieldset> 
-          </form>       
-        </div>
-       
-    <div id="modal-contact" class="modal-content">
-      <section id="modal-header" class="modal-header">
-          <h3 id="title-modal" class='title'></h3>
+        <form id ="contact-form" class="contact-form">
+          <fieldset>
+            <legend class='form-legend'></legend>
+                <div class="form-group">    
+                    <label for="fFirstName">Nome</label>
+                    <input type="text" id="fFirstName" class="input-form" name="fFirstName" placeholder="Digite seu primeiro nome" /><br/>                    <label for="fLastName">Sobrenome</label>
+                    <input type="text" id="fLastName" class="input-form" name="fLastName" placeholder="Digite seu sobrenome" /><br/>                     <label for="fEmail">E-mail</label>
+                    <input type="email" id="fEmail" class="input-form" name="fEmail" placeholder="Digite um e-mail válido"/><br/>                    <label for="fGender">Sexo</label>
+                      <select name="fGender" id="fGender" >
+                          <option value='f'>Feminino</option>
+                          <option value='m'>Masculino</option>
+                      </select><br/> 
+                    <label for ='fFavorite' >Favoritar</label>
+                    <input type='checkbox' id='fFavorite' name='fFavorite'/><br/>
+                    <label for="fCompany">Empresa</label>
+                    <input type="text" id="fCompany" class="input-form" name="fCompany" placeholder="Digite a empresa" /><br/>                    <label for="fAddress">Endereço</label>
+                    <input type="text" id="fAddress" class="input-form" name="fAddress" placeholder="Digite o endereço, Rua, bairro, etc..."/><br/>                    <label for="fPhone">Telefone</label>
+                    <input type="tel" id="fPhone" class="input-form" name="fPhone"  placeholder="Digite um número de telefone válido"/><br/>    
+                    <label for="fAvatar">Avatar</label>
+                    <input type="text" id="fAvatar" class="input-form" name="fAvatar" placeholder="Insira um link para o avatar"/><br/>      
+                    <label for="fComments">Comentários</label>
+                    <textarea id="fComments" class="textarea-form" name="fComments"  placeholder="Insira um comentário"></textarea>
+                </div> 
+                <input type="button" id="btConfirm" class="btConfirm" value='Enviar'>
+            </fieldset> 
+        </form>       
+      </div>
+<!--MODAL PARA MOSTRAR INFORMAÇÕES DO CONTATO-->       
+      <div id="modal-contact" class="modal-content">
+        <section id="modal-header" class="modal-header">
+            <h3 id="title-modal" class='title'></h3>
         </section> 
-      <div class="mIcons">   
-          <button class="garbage"><img src="img/icon-garbage.png" class="icon"/></button>
-          <button class="fav"><img src="" class="icon"/></button>
-          <button class="edit"><img src="img/icon-edit.png" class="icon"/></button>
+        <div class="mIcons">   
+            <button class="garbage"><img src="img/icon-garbage.png" class="icon"/></button>
+            <button class="fav"><img src="" class="icon"/></button>
+            <button class="edit"><img src="img/icon-edit.png" class="icon"/></button>
+        </div>
+          <img src="" id="mAvatar" class="avatar"/> 
+        <section class='modal-short-info'>    
+          <span>E-mail: <p class="mEmail"></p></span>
+          <span>Telefone: <p class="mPhone"></p></span>
+          <span>Sexo: <p class="mGender"></p></span>
+          <span>Empresa: <p class="mCompany"></p></span>
+          <span>Endereço: <p class="mAddress"></p></span>
+        </section>        
+        <div class="modal-contact-info">
+          <span>Comentarios:</span><p class="mComments"></p><br/>  
+        </div>
       </div>
-        <img src="" id="mAvatar" class="avatar"/>
-        
-      <section class='modal-short-info'>    
-        <span>E-mail: <p class="mEmail"></p></span>
-        <span>Telefone: <p class="mPhone"></p></span>
-        <span>Sexo: <p class="mGender"></p></span>
-        <span>Empresa: <p class="mCompany"></p></span>
-        <span>Endereço: <p class="mAddress"></p></span>
-      </section>        
-      <div class="modal-contact-info">
-        <span>Comentarios:</span><p class="mComments"></p><br/>  
-      </div>
-    </div>
-      
-</div>
-    
-    </div>
-  </body>
+    </div>  
+  </div>
+</body>
 </html>

@@ -3,43 +3,32 @@ import nfav from '../img/icon-fav.png';
 
 export const myFavs = window.localStorage;
 
-let favorites=[];
 
-export const getAllFavorites = function (contacts){
-    favorites = [];
-    for(let i = 0; i < contacts.length ; i++){
-        if(myFavs.getItem(contacts[i].id) != null){
-            favorites.push(contacts[i]);
-        }
-    }
+export const getAllFavorites = function (){
+    const {allContacts} = window.state;
+    const favorites = allContacts.filter(contact => contact.isFavorite == true);
     return favorites;
 }
 
-export const removeFavorite = function (contact) {
-    for(let i = 0; i < favorites.length; i++){
-        if(myFavs.getItem(contact.id)){
-            favorites.splice(i,1);
-            break;
-        }
-    }
+export const searchContact = function (search) {
+    const {allContacts} = window.state;
+
+    const foundContacts = allContacts.filter(contacts => new RegExp(search.toLowerCase()).test(contacts.firstName.toLowerCase()));
+    console.log(foundContacts);
+    return foundContacts;
 }
 
-/*ATRIBUI ICONE DE FAVORITO E SETA OS CONTATOS FAVORITOS*/
+/*ATRIBUI ICONE DE FAVORITO*/
 export const isFavorite = function(contact)  {
-    if (contact.isFavorite) {  //se ele for favorito    
-        if(myFavs.getItem(contact.id) != null){ //se estiver no LS
-            return fav; 
-        }else{
-            myFavs.setItem(contact.id,true); //add no LS //add no array
+    if (contact.isFavorite) {
+        if(myFavs.getItem(contact.id) != null){
             return fav;
-        }
-    } else {
-        if(myFavs.getItem(contact.id) != null){//se for falso, mas estiver como favorito no LS
-            contact.isFavorite = true;
-            return fav;   
         }else{
-            return nfav;
-        }   
+            myFavs.setItem(contact.id,'true');
+            return fav;
+        }           
+    } else {
+        return nfav;  
     }
 }
 

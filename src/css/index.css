@@ -48,6 +48,17 @@ header {
       margin:3px;
   }
 
+  #search button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition:0.3s;
+  }
+
+  #search button:hover {
+    transform: scale(1.1);
+  }
+
   #search img {
     padding: 5px;
   }
@@ -63,6 +74,12 @@ header {
     color:#e1e1e1;
     box-sizing: border-box;
     margin: 5px 10px;
+    cursor: pointer;
+    transition:0.3s;
+  }
+
+  #menuButtons a:hover {
+    text-shadow: 0px 0px 1px #fff;
   }
 
   #container {
@@ -204,6 +221,8 @@ header {
   position:relative;
   float:left;
   margin:10px;
+  width: 125px;
+  height: 125px;
 }
 
 .mIcons {
@@ -212,10 +231,12 @@ header {
   margin-top: 10px;
 }
 
+
+
 .modal-short-info span{
   box-sizing: border-box;
   margin:0;
-  line-height: 27px;
+  line-height: 26px;
   display:flex;
   font-size:15pt;
   font-weight: 900;
