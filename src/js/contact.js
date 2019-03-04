@@ -14,7 +14,6 @@ export const searchContact = function (search) {
     const {allContacts} = window.state;
 
     const foundContacts = allContacts.filter(contacts => new RegExp(search.toLowerCase()).test(contacts.firstName.toLowerCase()));
-    console.log(foundContacts);
     return foundContacts;
 }
 

@@ -12,7 +12,8 @@ let favAux;
 let contacts = [];
 let allContacts =[];
 
-const contactCard = document.getElementsByClassName('contactList').childNodes.length;
+const contactList = document.getElementsByClassName('contact-card');
+
 
 const getAll = async () => {
     const res = await fetch('http://contacts-api.azurewebsites.net/api/contacts/')
@@ -33,14 +34,13 @@ window.addEventListener('scroll',() =>{
     const scrolled = window.scrollY;
 
     if (index < contacts.length) {
-        if(contactCard<=0){
+        if(HTMLCollection == [] && contacts != null){
             loadMore();
         }
      if(Math.ceil(scrolled) >= scrollable){
             if(favAux){ //Se clicou na aba de favoritos
                 loadMore();
             }else{
-                console.log('todos os contatos');
                 loadMore();
             } 
         }
@@ -60,41 +60,39 @@ export const loadMore = function (reset) {
     if(reset == 1){
         index = 0;
         contactsDiv.innerHTML = "";
-    }else{
-            const aux = index + 10;
-            if (index == contacts.length) {
-                contactsDiv.innerHTML = "";
-            } else {
-                for (let i = index; i < aux; i++) {
-                    index++;
-                    if (!window.state.loading) {
-                        let favIcon = isFavorite(contacts[i]);
-                        const b = document.createElement("div");
-                        b.className = 'contact-card';
-                        b.innerHTML =
-                            `<button class='card-header'>
-                                <img src='${favIcon}' class="icon-card"/>
-                                <img src='${contacts[i].info.avatar}' class='avatar'/>                  
-                                <section class="main-info">
-                                    <h3>${contacts[i].firstName} ${contacts[i].lastName}</h3>
-                                    <h4>${contacts[i].email}</h4> 
-                                    <p>${contacts[i].info.phone}</p>
-                                </section>
-                            </button>`;
-                        b.onclick = () => {
-                            openModal(contacts[i]);
-                        }
-                        contactsDiv.appendChild(b);
-                    }else{
-                        const b = document.createElement("div");
-                        b.innerHTML = `<h1>CARREGANDO...</h1>`
-                        const body = document.getElementById('container');
-                        body.innerHTML = b;  
-                    }
-                }
-            } 
-              
     }
+    const aux = index + 10;
+    if (index == contacts.length) {
+        contactsDiv.innerHTML = "";
+    } else {
+        for (let i = index; i < aux; i++) {
+            index++;
+            if (!window.state.loading) {
+                let favIcon = isFavorite(contacts[i]);
+                const b = document.createElement("div");
+                b.className = 'contact-card';
+                b.innerHTML =
+                    `<button class='card-header'>
+                        <img src='${favIcon}' class="icon-card"/>
+                        <img src='${contacts[i].info.avatar}' class='avatar'/>                  
+                        <section class="main-info">
+                            <h3>${contacts[i].firstName} ${contacts[i].lastName}</h3>
+                            <h4>${contacts[i].email}</h4> 
+                            <p>${contacts[i].info.phone}</p>
+                        </section>
+                    </button>`;
+                b.onclick = () => {
+                    openModal(contacts[i]);
+                }
+                contactsDiv.appendChild(b);
+            }else{
+                const b = document.createElement("div");
+                b.innerHTML = `<h1>CARREGANDO...</h1>`
+                const body = document.getElementById('container');
+                body.innerHTML = b;  
+            }
+        }
+    } 
 }
 
 const btFavContacts = document.getElementById('aFavorites');

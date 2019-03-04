@@ -71,8 +71,6 @@ export const openModal = (contact)=>{
     elementsModalDOM.comments.innerHTML = contact.info.comments;
     elementsModalDOM.avatar.setAttribute('src', contact.info.avatar);
     elementsModalDOM.favorite.setAttribute('src', isFavorite(contact));
-    console.log();
-    console.log(elementsModalDOM.avatar.value);
 
     btEdit.onclick = () => {
         openForm(contact);
