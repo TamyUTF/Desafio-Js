@@ -12,8 +12,21 @@ let favAux;
 let contacts = [];
 let allContacts =[];
 
-const contactList = document.getElementsByClassName('contact-card');
+const btToggle = document.getElementById("btToggle");
+const sideMenu = document.getElementById('menuButtons');
+const container = document.getElementById('container');
 
+btToggle.onclick =() =>{
+    console.log(sideMenu.style.width);
+    if(sideMenu.style.width == '0px'){
+        console.log('entrei aq');
+        sideMenu.style.width = '200px';
+        container.style.marginLeft = '200px';
+    }else{
+        sideMenu.style.width = 0;
+        container.style.marginLeft = 0;
+    }
+}
 
 const getAll = async () => {
     const res = await fetch('http://contacts-api.azurewebsites.net/api/contacts/')
