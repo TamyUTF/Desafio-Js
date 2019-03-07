@@ -43,9 +43,6 @@ window.addEventListener('scroll',() =>{
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const scrolled = window.scrollY;
     if (index < contacts.length) {
-        if(HTMLCollection == [] && contacts != null){
-            loadMore();
-        }
      if(Math.ceil(scrolled) >= scrollable){
             if(favAux.getItem('flag') == true){ //Se clicou na aba de favoritos      
                 loadMore();
@@ -60,10 +57,13 @@ getAll().then(() => {
     contacts = allContacts;
     if(favAux.getItem('flag') == null){  
         favAux.setItem('flag', false);
-    }else if(favAux.getItem('flag') == 'true'){
-        favAux.setItem('flag', false);
+    }else if (favAux.getItem('flag') == 'false'){
+        contacts = allContacts;
+        loadMore();
+    }else{
+        contacts = getAllFavorites();
+        loadMore();
     }
-    loadMore();
 });
 
 
