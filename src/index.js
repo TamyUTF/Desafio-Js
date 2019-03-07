@@ -57,6 +57,7 @@ getAll().then(() => {
     contacts = allContacts;
     if(favAux.getItem('flag') == null){  
         favAux.setItem('flag', false);
+        loadMore();
     }else if (favAux.getItem('flag') == 'false'){
         contacts = allContacts;
         loadMore();
