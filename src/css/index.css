@@ -68,6 +68,7 @@ header {
   flex-wrap: nowrap;
   padding: 10px;
   z-index:3;
+  border: 1px solid rgba(0, 0, 0, 0.342);
 }
 
 #btToggle {

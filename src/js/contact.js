@@ -1,9 +1,6 @@
 import fav from '../img/icon-fav-full.png';
 import nfav from '../img/icon-fav.png';
 
-export const myFavs = window.localStorage;
-
-
 export const getAllFavorites = function (){
     const {allContacts} = window.state;
     const favorites = allContacts.filter(contact => contact.isFavorite == true);
@@ -20,12 +17,7 @@ export const searchContact = function (search) {
 /*ATRIBUI ICONE DE FAVORITO*/
 export const isFavorite = function(contact)  {
     if (contact.isFavorite) {
-        if(myFavs.getItem(contact.id) != null){
-            return fav;
-        }else{
-            myFavs.setItem(contact.id,'true');
-            return fav;
-        }           
+        return fav;
     } else {
         return nfav;  
     }

@@ -3,7 +3,6 @@ import nfav from '../img/icon-fav.png';
 
 import { isFavorite } from "./contact";
 import {loadMore} from "./../index";
-import {myFavs} from './contact';
 import {updateContact} from './api';
 import {createContact} from './api';
 import {deleteContact} from './api';
@@ -143,15 +142,10 @@ export const openForm = (contact) => {
 
 const favoriteContact = (contact) => {
     if(contact.isFavorite == true){
-        if(myFavs.getItem(contact.id) != null){
-            myFavs.removeItem(contact.id);
-        }
         contact.isFavorite = false;
         updateFavorite(contact);
         imgFav.setAttribute('src', nfav);
     }else{
-        myFavs.setItem(contact.id, true);
-        contact.isFavorite = true;
         updateFavorite(contact);
         imgFav.setAttribute('src', fav);
     }

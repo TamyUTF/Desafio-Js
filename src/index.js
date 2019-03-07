@@ -8,7 +8,7 @@ import {getAllFavorites} from './js/contact';
 import {openForm} from './js/modal';
 import {searchContact} from './js/contact';
 
-let favAux;
+const favAux = window.localStorage;
 let contacts = [];
 let allContacts =[];
 
@@ -17,9 +17,7 @@ const sideMenu = document.getElementById('menuButtons');
 const container = document.getElementById('container');
 
 btToggle.onclick =() =>{
-    console.log(sideMenu.style.width);
     if(sideMenu.style.width == '0px'){
-        console.log('entrei aq');
         sideMenu.style.width = '200px';
         container.style.marginLeft = '200px';
     }else{
@@ -29,8 +27,7 @@ btToggle.onclick =() =>{
 }
 
 const getAll = async () => {
-    const res = await fetch('http://contacts-api.azurewebsites.net/api/contacts/')
-
+    const res = await fetch('http://contacts-api.azurewebsites.net/api/contacts/');
     const data = await res.json();
     window.state = {
         ...window.state,
@@ -45,13 +42,12 @@ const getAll = async () => {
 window.addEventListener('scroll',() =>{
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const scrolled = window.scrollY;
-
     if (index < contacts.length) {
         if(HTMLCollection == [] && contacts != null){
             loadMore();
         }
      if(Math.ceil(scrolled) >= scrollable){
-            if(favAux){ //Se clicou na aba de favoritos
+            if(favAux.getItem('flag') == true){ //Se clicou na aba de favoritos      
                 loadMore();
             }else{
                 loadMore();
@@ -62,6 +58,11 @@ window.addEventListener('scroll',() =>{
 
 getAll().then(() => {
     contacts = allContacts;
+    if(favAux.getItem('flag') == null){  
+        favAux.setItem('flag', false);
+    }else if(favAux.getItem('flag') == 'true'){
+        favAux.setItem('flag', false);
+    }
     loadMore();
 });
 
@@ -110,14 +111,14 @@ export const loadMore = function (reset) {
 
 const btFavContacts = document.getElementById('aFavorites');
 btFavContacts.addEventListener('click', function(){
-    favAux = true;
+    favAux.setItem('flag', true);
     contacts = getAllFavorites();
     loadMore(1);
 });
 
 const btHome = document.getElementById('aHome');
 btHome.addEventListener('click', function(){
-    favAux = false;
+    favAux.setItem('flag', false);
     contacts = allContacts;
     loadMore(1)
 })
